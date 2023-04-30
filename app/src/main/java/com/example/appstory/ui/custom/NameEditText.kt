@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
+import com.example.appstory.R
 
 class NameEditText : AppCompatEditText{
     private lateinit var clearButtonImage: Drawable
@@ -26,8 +28,8 @@ class NameEditText : AppCompatEditText{
 
     }
     private fun init(){
-        hint = "Masukkan Username"
-        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+        hint = resources.getString(R.string.hint_username)
+        background = ContextCompat.getDrawable(context, R.drawable.background_edt)
     }
 
 }

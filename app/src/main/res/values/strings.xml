@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">App Story</string>
-    <string name="message_login_page">Masuk dan Ceritakan ceritamu!!!</string>
+    <string name="message_login_page">Masuk dan Ceritakan ceritamu yukk!!!</string>
     <string name="title_login_page">Punya Cerita Apa Hari ini ??</string>
     <string name="error_email">Masukkan Email Valid</string>
     <string name="email_kosong">Email Tidak Boleh Kosong</string>
     <string name="minimal_password">Password Harus Minimal 6 Character</string>
+    <string name="hint_password">Masukkan Password Anda</string>
+    <string name="hint_email">Masukkan Email Anda</string>
+    <string name="hint_username">"Masukkan Nama Anda "</string>
+    <string name="atau">Atau Belum Punya Akun?</string>
 </resources>

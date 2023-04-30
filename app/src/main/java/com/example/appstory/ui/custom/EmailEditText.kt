@@ -5,7 +5,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
+import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import com.example.appstory.R
 
 class EmailEditText : AppCompatEditText {
@@ -26,6 +28,8 @@ class EmailEditText : AppCompatEditText {
     }
 
     private fun init() {
+        hint = resources.getString(R.string.hint_email)
+        background = ContextCompat.getDrawable(context, R.drawable.background_edt)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 

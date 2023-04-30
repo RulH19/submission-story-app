@@ -4,7 +4,9 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import com.example.appstory.R
 
 class PasswordEditText : AppCompatEditText  {
@@ -25,6 +27,9 @@ class PasswordEditText : AppCompatEditText  {
     }
 
     private fun init() {
+
+        hint = resources.getString(R.string.hint_password)
+        background = ContextCompat.getDrawable(context, R.drawable.background_edt)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 

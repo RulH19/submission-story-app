@@ -6,18 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_story_app" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:alpha="1"
         android:text="@string/title_login_page"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="81dp" />
+        android:layout_marginStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/messageTextView"
@@ -27,6 +40,61 @@
         android:text="@string/message_login_page"
         android:textColor="@color/black"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="125dp" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+    <com.example.appstory.ui.custom.EmailEditText
+        android:id="@+id/email_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        app:startIconDrawable ="@drawable/baseline_email_24"
+        app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+        app:layout_constraintStart_toStartOf="@+id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextView"
+        />
+
+    <com.example.appstory.ui.custom.PasswordEditText
+        android:id="@+id/password_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        app:startIconDrawable ="@drawable/baseline_lock_24"
+        app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/email_edit_text" />
+    <com.example.appstory.ui.custom.MyButtonLogin
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_edit_text" />
+    <TextView
+        android:id="@+id/atau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/atau"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        />
+    <com.example.appstory.ui.custom.MyButtonRegister
+        android:id="@+id/register_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atau" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
