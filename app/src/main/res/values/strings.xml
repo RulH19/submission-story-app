@@ -15,8 +15,10 @@
     <string name="title_menu_1">Punya Banyak Cerita</string>
     <string name="title_menu_2">Butuh Motivasi dan Hiburan ?</string>
     <string name="title_menu_3">Bosan Hanya Baca Cerita?</string>
+    <string name="title_menu_4">Tunggu Apalagi di Klik Buttonnya</string>
     <string name="desc_menu_1">Yuk Ekspresikan Ceritamu Di sini </string>
     <string name="desc_menu_2">Tenang disini tempatnya orang bercerita.</string>
     <string name="desc_menu_3">Lihat Cerita serta Gambar Orang disini dan Tambahkan Foto di Ceritamu</string>
-     <string name="mulai_sekarang">Yuk Mulai Sekarang!!</string>
+    <string name="desc_menu_4">Bagikan Cerita Kamu Dengan Bebas</string>
+    <string name="mulai_sekarang">Yuk Mulai Sekarang!!</string>
 </resources>
