@@ -8,5 +8,8 @@
     <string name="hint_password">Masukkan Password Anda</string>
     <string name="hint_email">Masukkan Email Anda</string>
     <string name="hint_username">"Masukkan Nama Anda "</string>
-    <string name="atau">Atau Belum Punya Akun?</string>
+    <string name="title_register_page">Punya Cerita Menarik</string>
+    <string name="message_register_page">Yuk Buat Akun Dulu</string>
+    <string name="atau_login">Sudah Ada Akun ? Yuk Login !!</string>
+    <string name="atau_register">"Belum Punya Akun ? Yuk Daftar !! "</string>
 </resources>
