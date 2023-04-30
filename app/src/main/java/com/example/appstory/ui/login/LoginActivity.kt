@@ -24,12 +24,6 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = binding.emailEditText
         passwordEditText = binding.passwordEditText
 
-        setMyButtonEnable()
     }
-    private fun setMyButtonEnable() {
-        val result1 = emailEditText.text
-        val result2 = passwordEditText
-        myButtonLogin.isEnabled = result1 != null && result1.toString().isNotEmpty() &&
-                result2 != null && result2.toString().isNotEmpty()
-    }
+
 }
