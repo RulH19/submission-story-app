@@ -1,5 +1,6 @@
 package com.example.appstory.ui.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.appstory.databinding.ActivityRegisterBinding
@@ -8,6 +9,7 @@ import com.example.appstory.ui.custom.EmailEditText
 import com.example.appstory.ui.custom.MyButtonRegister
 import com.example.appstory.ui.custom.NameEditText
 import com.example.appstory.ui.custom.PasswordEditText
+import com.example.appstory.ui.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
@@ -24,14 +26,15 @@ class RegisterActivity : AppCompatActivity() {
         nameEditText = binding.nameEditText
         emailEditText = binding.emailEditText
         passwordEditText = binding.passwordEditText
-        setMyButtonEnable()
+
+        binding.loginButton.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.registerButton.setOnClickListener {
+
+        }
     }
-    private fun setMyButtonEnable() {
-        val name = nameEditText.text
-        val email = emailEditText.text
-        val password = passwordEditText
-        myButtonRegister.isEnabled = email != null && email.toString().isNotEmpty() &&
-                password != null && password.toString().isNotEmpty() &&
-                name != null && name.toString().isNotEmpty()
-    }
+
 }
