@@ -35,13 +35,15 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         setupAction()
+
+    }
+    private fun setupAction() {
         binding.registerButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
-    }
-    private fun setupAction() {
+
         binding.loginButton.setOnClickListener {
             if (!binding.emailEditText.text.isNullOrEmpty() && !binding.passwordEditText.text.isNullOrEmpty()){
                 val email = binding.emailEditText.text.toString()
@@ -50,15 +52,22 @@ class LoginActivity : AppCompatActivity() {
 
                 result.observe(this){
                     when (it) {
+                        is Result.Loading ->{
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
                         is Result.Error -> {
+                            binding.progressBar.visibility = View.INVISIBLE
                             val error = it.error
                             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                         }
                         is Result.Success -> {
+                            binding.progressBar.visibility = View.INVISIBLE
                             val data = it.data
                             Log.d("LoginActivity", "Token: ${data.loginResult.token}")
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }else ->{
-
                         }
                     }
                 }

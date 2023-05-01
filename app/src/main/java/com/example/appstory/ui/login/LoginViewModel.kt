@@ -33,7 +33,7 @@ class LoginViewModel : ViewModel() {
                         responseLogin.value = Result.Success(loginInfo)
                     }
                 } else {
-                    responseLogin.value = Result.Error("Login failed, please try again later.")
+                    responseLogin.value = Result.Error("Login gagal Cek Email dan Password")
                     Log.e(ControlsProviderService.TAG, "Failed: Response Unsuccessful - ${response.message()}")
                 }
             }

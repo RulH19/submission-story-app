@@ -26,9 +26,10 @@ class RegisterViewModel : ViewModel() {
                     val registerInfo = response.body()
                     if (registerInfo != null) {
                         responseSignUp.value = Result.Success(registerInfo)
+
                     }
                 }else {
-                    responseSignUp.value = Result.Error("Register failed, please try again later.")
+                    responseSignUp.value = Result.Error("Register failed, email sudah ada")
                     Log.e(ControlsProviderService.TAG, "Failed: Response Unsuccessful - ${response.message()}")
                 }
             }
