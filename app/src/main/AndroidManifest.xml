@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AppStory"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"

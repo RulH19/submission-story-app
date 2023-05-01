@@ -1,5 +1,6 @@
 package com.example.appstory.data.datastore
 
+import android.media.session.MediaSession.Token
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -9,36 +10,37 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class UserPreference private constructor(private val dataStore :DataStore<Preferences>) {
-    private val token = stringPreferencesKey("token")
-    private val isLogin = booleanPreferencesKey("is_login")
+
 
     fun getUserToken():Flow<String>{
         return dataStore.data.map{
-            it[token] ?:""
+            it[TOKEN] ?:""
         }
     }
     fun isLoginFirstTime():Flow<Boolean>{
         return dataStore.data.map {
-            it[isLogin]?:true
+            it[ISLOGIN]?:true
         }
     }
     suspend fun saveUserToken(token:String){
         dataStore.edit{
-            it[this.token] = token
+            it[TOKEN] = token
         }
     }
     suspend fun userLogin(firstTime:Boolean){
         dataStore.edit {
-            it[this.isLogin] = firstTime
+            it[ISLOGIN] = firstTime
         }
     }
 
     suspend fun userLogout(){
         dataStore.edit {
-            it[token] = ""
+            it[TOKEN] = ""
         }
     }
     companion object {
+        private val TOKEN = stringPreferencesKey("token")
+        private val ISLOGIN = booleanPreferencesKey("is_login")
         @Volatile
         private var INSTANCE : UserPreference ?= null
 

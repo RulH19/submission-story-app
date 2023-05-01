@@ -6,38 +6,35 @@ import com.example.appstory.data.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.appstory.data.model.ApiConfig
+import com.example.appstory.data.repository.UserRepository
+import com.example.appstory.di.Injection
 import com.example.storyapp.model.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel : ViewModel() {
-
-    var responseSignUp = MediatorLiveData<Result<RegisterResponse>>()
-    fun createUser(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> {
-        val client = ApiConfig.getApiService().registerUser(name, email, password)
-        client.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>,
-            ) {
-                if (response.isSuccessful) {
-                    val registerInfo = response.body()
-                    if (registerInfo != null) {
-                        responseSignUp.value = Result.Success(registerInfo)
-
-                    }
-                }else {
-                    responseSignUp.value = Result.Error("Register failed, email sudah ada")
-                    Log.e(ControlsProviderService.TAG, "Failed: Response Unsuccessful - ${response.message()}")
-                }
+class RegisterViewModel (private val userRepository: UserRepository): ViewModel() {
+    fun registerUser(name: String, email: String, password: String) =
+        userRepository.createUser(name, email, password)
+    class RegisterViewModelFactory private constructor(private val userRepository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+                return RegisterViewModel(userRepository) as T
             }
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Log.e("Cek salah", "onFailure: ${t.message}")
+
+            throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+        }
+
+        companion object {
+            @Volatile
+            private var instance: RegisterViewModelFactory? = null
+
+            fun getInstance(): RegisterViewModelFactory = instance ?: synchronized(this) {
+                instance ?: RegisterViewModelFactory(Injection.provideUserRepository())
             }
-        })
-        return responseSignUp
+        }
     }
-
 }

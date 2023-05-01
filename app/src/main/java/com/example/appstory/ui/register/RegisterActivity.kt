@@ -15,12 +15,14 @@ import com.example.appstory.ui.custom.MyButtonRegister
 import com.example.appstory.ui.custom.NameEditText
 import com.example.appstory.ui.custom.PasswordEditText
 import com.example.appstory.ui.login.LoginActivity
-import com.example.appstory.ui.login.LoginViewModel
-import com.example.appstory.ui.main.MainActivity
+import androidx.activity.viewModels
 
 class RegisterActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel: RegisterViewModel by viewModels {
+        RegisterViewModel.RegisterViewModelFactory.getInstance()
+    }
     private lateinit var myButtonRegister: MyButtonRegister
     private lateinit var nameEditText: NameEditText
     private lateinit var emailEditText: EmailEditText
@@ -35,7 +37,6 @@ class RegisterActivity : AppCompatActivity() {
         emailEditText = binding.emailEditText
         passwordEditText = binding.passwordEditText
 
-        registerViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         setupAction()
 
 
@@ -52,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             if (!binding.nameEditText.text.isNullOrEmpty() && !binding.emailEditText.text.isNullOrEmpty() && !binding.passwordEditText.text.isNullOrEmpty()) {
-                val result = registerViewModel.createUser(name, email, password)
+                val result = registerViewModel.registerUser(name, email, password)
                 result.observe(this) {
                     when (it) {
                         is Result.Loading -> {

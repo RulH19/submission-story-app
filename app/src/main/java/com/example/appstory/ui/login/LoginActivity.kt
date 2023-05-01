@@ -1,5 +1,6 @@
 package com.example.appstory.ui.login
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,19 +8,31 @@ import android.util.Log
 import com.example.appstory.data.Result
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.appstory.R
+import com.example.appstory.data.datastore.UserPreference
 import com.example.appstory.databinding.ActivityLoginBinding
 import com.example.appstory.ui.custom.EmailEditText
 import com.example.appstory.ui.custom.MyButtonLogin
 import com.example.appstory.ui.custom.NameEditText
 import com.example.appstory.ui.custom.PasswordEditText
+import com.example.appstory.ui.home.HomeActivity
 import com.example.appstory.ui.main.MainActivity
 import com.example.appstory.ui.register.RegisterActivity
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding : ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels {
+        LoginViewModel.LoginViewModelFactory.getInstance(
+            UserPreference.getInstance(dataStore)
+        )
+    }
     private lateinit var myButtonLogin: MyButtonLogin
     private lateinit var emailEditText: EmailEditText
     private lateinit var passwordEditText: PasswordEditText
@@ -33,10 +46,23 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = binding.emailEditText
         passwordEditText = binding.passwordEditText
 
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         setupAction()
 
     }
+//    override fun onResume() {
+//        super.onResume()
+//        initialCheck()
+//    }
+//    private fun initialCheck() {
+//        loginViewModel.ifFirstTime().observe(this) {
+//            if (it) {
+//                val intent = Intent(this, HomeActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//                finish()
+//            }
+//        }
+//    }
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -48,8 +74,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             if (!binding.emailEditText.text.isNullOrEmpty() && !binding.passwordEditText.text.isNullOrEmpty()){
-
-                val result = loginViewModel.loginUser(email,password)
+                val result = loginViewModel.userLogin(email,password)
 
                 result.observe(this){
                     when (it) {
