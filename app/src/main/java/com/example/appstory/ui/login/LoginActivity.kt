@@ -45,9 +45,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginButton.setOnClickListener {
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
             if (!binding.emailEditText.text.isNullOrEmpty() && !binding.passwordEditText.text.isNullOrEmpty()){
-                val email = binding.emailEditText.text.toString()
-                val password = binding.passwordEditText.text.toString()
+
                 val result = loginViewModel.loginUser(email,password)
 
                 result.observe(this){
@@ -71,6 +72,9 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }else {
+                if (email.isNullOrEmpty()) binding.emailEditText.error = getString(R.string.email_tidak_kosong)
+                if (password.isNullOrEmpty()) binding.passwordEditText.error = getString(R.string.password_minimal)
             }
 
         }

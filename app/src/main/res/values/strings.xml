@@ -21,4 +21,7 @@
     <string name="desc_menu_3">Lihat Cerita serta Gambar Orang disini dan Tambahkan Foto di Ceritamu</string>
     <string name="desc_menu_4">Bagikan Cerita Kamu Dengan Bebas</string>
     <string name="mulai_sekarang">Yuk Mulai Sekarang!!</string>
+    <string name="name_tidak_kosong">Nama Tidak Boleh Kosong</string>
+    <string name="email_tidak_kosong">Email Tidak Boleh Kosong</string>
+    <string name="password_minimal">Password tidak boleh kosong</string>
 </resources>
