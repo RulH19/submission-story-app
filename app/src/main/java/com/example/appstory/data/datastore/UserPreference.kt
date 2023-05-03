@@ -14,7 +14,7 @@ class UserPreference private constructor(private val dataStore :DataStore<Prefer
 
     fun getUserToken():Flow<String>{
         return dataStore.data.map{
-            it[TOKEN] ?:""
+            it[TOKEN] ?:"null"
         }
     }
     fun isLoginFirstTime():Flow<Boolean>{
@@ -35,7 +35,7 @@ class UserPreference private constructor(private val dataStore :DataStore<Prefer
 
     suspend fun userLogout(){
         dataStore.edit {
-            it[TOKEN] = ""
+            it[TOKEN] = "null"
         }
     }
     companion object {
@@ -46,10 +46,8 @@ class UserPreference private constructor(private val dataStore :DataStore<Prefer
 
         fun getInstance(dataStore:DataStore<Preferences>): UserPreference{
             return INSTANCE ?: synchronized(this){
-                val instance = UserPreference(dataStore)
-                INSTANCE = instance
-                instance
-            }
+                INSTANCE ?: UserPreference(dataStore)
+            }.also { INSTANCE = it }
         }
     }
 }

@@ -28,4 +28,5 @@
     <string name="username">Nama User</string>
     <string name="captiontext">Caption Story</string>
     <string name="logout">Log Out</string>
+    <string name="dibutuhkan_izin">Dibutuhkan Izin Menggunakan Camera</string>
 </resources>

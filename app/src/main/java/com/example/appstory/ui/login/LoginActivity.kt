@@ -27,7 +27,9 @@ import com.example.appstory.ui.register.RegisterActivity
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityLoginBinding
+    private val binding: ActivityLoginBinding by lazy {
+        ActivityLoginBinding.inflate(layoutInflater)
+    }
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModel.LoginViewModelFactory.getInstance(
             UserPreference.getInstance(dataStore)
@@ -39,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         myButtonLogin = binding.loginButton
@@ -49,20 +50,20 @@ class LoginActivity : AppCompatActivity() {
         setupAction()
 
     }
-//    override fun onResume() {
-//        super.onResume()
-//        initialCheck()
-//    }
-//    private fun initialCheck() {
-//        loginViewModel.ifFirstTime().observe(this) {
-//            if (it) {
-//                val intent = Intent(this, HomeActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//                finish()
-//            }
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        initialCheck()
+    }
+    private fun initialCheck() {
+        loginViewModel.ifFirstTime().observe(this) {
+            if (it) {
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -71,9 +72,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+
             if (!binding.emailEditText.text.isNullOrEmpty() && !binding.passwordEditText.text.isNullOrEmpty()){
+                val email = binding.emailEditText.text.toString()
+                val password = binding.passwordEditText.text.toString()
                 val result = loginViewModel.userLogin(email,password)
 
                 result.observe(this){
@@ -89,17 +91,17 @@ class LoginActivity : AppCompatActivity() {
                         is Result.Success -> {
                             binding.progressBar.visibility = View.INVISIBLE
                             val data = it.data
+                            loginViewModel.userSaveToken(data.loginResult.token)
                             Log.d("LoginActivity", "Token: ${data.loginResult.token}")
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                             finish()
-                        }else ->{
                         }
                     }
                 }
             }else {
-                if (email.isNullOrEmpty()) binding.emailEditText.error = getString(R.string.email_tidak_kosong)
-                if (password.isNullOrEmpty()) binding.passwordEditText.error = getString(R.string.password_minimal)
+                if (binding.emailEditText.text.isNullOrEmpty()) binding.emailEditText.error = getString(R.string.email_tidak_kosong)
+                if (binding.passwordEditText.text.isNullOrEmpty()) binding.passwordEditText.error = getString(R.string.password_minimal)
             }
 
         }
