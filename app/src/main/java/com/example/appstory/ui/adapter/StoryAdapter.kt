@@ -16,7 +16,7 @@ import com.example.appstory.databinding.StoryItemBinding
 import com.example.storyapp.model.response.ListStoryItem
 import com.example.storyapp.model.response.StoryResponse
 
-class StoryAdapter (private val context: Context, private val list: List<StoryEntity>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
+class StoryAdapter (private val list: List<StoryEntity>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
     inner class StoryViewHolder(val binding: StoryItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.StoryViewHolder {

@@ -6,48 +6,49 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.appstory.BuildConfig.TOKEN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class UserPreference private constructor(private val dataStore :DataStore<Preferences>) {
-
+    private val token = stringPreferencesKey("token")
+    private val islogin = booleanPreferencesKey("is_login")
 
     fun getUserToken():Flow<String>{
         return dataStore.data.map{
-            it[TOKEN] ?:"null"
+            it[token] ?:"null"
         }
     }
     fun isLoginFirstTime():Flow<Boolean>{
         return dataStore.data.map {
-            it[ISLOGIN]?:true
+            it[islogin]?:true
         }
     }
     suspend fun saveUserToken(token:String){
         dataStore.edit{
-            it[TOKEN] = token
+            it[this.token] = token
         }
     }
-    suspend fun userLogin(firstTime:Boolean){
+    suspend fun userLogin(islogin:Boolean){
         dataStore.edit {
-            it[ISLOGIN] = firstTime
+            it[this.islogin] = islogin
         }
     }
 
     suspend fun userLogout(){
         dataStore.edit {
-            it[TOKEN] = "null"
+            it[token] = "null"
         }
     }
     companion object {
-        private val TOKEN = stringPreferencesKey("token")
-        private val ISLOGIN = booleanPreferencesKey("is_login")
+
         @Volatile
         private var INSTANCE : UserPreference ?= null
 
-        fun getInstance(dataStore:DataStore<Preferences>): UserPreference{
-            return INSTANCE ?: synchronized(this){
+        fun getInstance(dataStore:DataStore<Preferences>): UserPreference=
+             INSTANCE ?: synchronized(this){
                 INSTANCE ?: UserPreference(dataStore)
             }.also { INSTANCE = it }
-        }
+
     }
 }

@@ -37,22 +37,24 @@ class HomeActivity : AppCompatActivity() {
             UserPreference.getInstance(dataStore)
         )
     }
+    private lateinit var adapter: StoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        checkIfSessionValid()
+        homeViewModel.checkAvailableToken().observe(this){
+            setupView("Bearer $it")
+        }
     }
-
     private fun checkIfSessionValid() {
         homeViewModel.checkAvailableToken().observe(this) {
-            if (it == "null") {
+            if (it != "null") {
+
+            } else {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            } else {
-                setupView("Bearer $it")
             }
         }
     }
@@ -75,10 +77,12 @@ class HomeActivity : AppCompatActivity() {
                     if (data.isEmpty()) {
                         Toast.makeText(this, "Data Kosong", Toast.LENGTH_SHORT).show()
                     } else {
+                        adapter = StoryAdapter (data)
+                        adapter.notifyDataSetChanged()
                         binding.apply {
                             rvUsers.layoutManager = LinearLayoutManager(this@HomeActivity)
                             rvUsers.setHasFixedSize(true)
-                            rvUsers.adapter = StoryAdapter(this@HomeActivity, data)
+                            rvUsers.adapter = adapter
                         }
                     }
                 }
